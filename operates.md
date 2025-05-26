@@ -7,7 +7,7 @@ there differnt types of operators supported by js
         3.Comparasion operators
         4.Logical operators
         5.Bitwise operators
-        7.typeof operator
+        7.types operators
         8.string operators
         9.nullish operator
 1.Arthamatic operators:
@@ -36,7 +36,36 @@ there differnt types of operators supported by js
     2. === : it is same as equal to but it dont performs type coercion but it compares bothvalue and data type
     3. >:it means greterthan it compares the left hand value is greterthan right hand value
     4. <:it means less than it compares the left-hand value is lower than right-hand value
-    5. >=it means grerer than equalsto 
-    6. <=
-    7. !=
-    8. !==
+    5. >=it means greter than equalsto it compares left-hand value is greater than are equalsto right-handvalue 
+    6. <=it means less than equalsto it compares left-hand value is lower than are equalsto right-handvalue 
+    7. != it means that right hand value should not equal to left hand value
+    8. !== it means that right  hand value stirctly not equal to left hand value 
+    
+Logical operators
+ 1.AND(&&): it workes on truth table like if both values are true then it returns true otherwise it returns false
+ 2.OR(||): it is also workes on truth table if any value is true it returns true otherwise false
+ 3.NOT(!): it is like revarse like if value is true it returns false
+Bitwise operators
+ it comapares the values bitwise
+types operators
+1.type of operators : the type of operate used to know the data type of the variable returns the type of variable
+2.instance of operators : Returns true if an object is an instance of an object type
+
+string operators : 
+    string comparision 
+    string concatination (adition)
+nullish operator(??): it is the  speail operator newley intrdocued in ES2020
+it checks the left hand value is null or undefined than it will returns the right hand value
+ternary operator(?):
+ it requried three operands and it is checkes frist condition if it is true the frist value return aotherwise it returns second value 
+
+ unary operators
+    1.unary plus(+)
+    2.unary minus(-)
+    3.logical not(!)
+    4.delete 
+    5.bitwise not(~)
+    6.void:Evaluates an expression and returns undefined.
+    7.typeof 
+
+
