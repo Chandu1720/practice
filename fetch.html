@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETCH</title>
+    <style>
+        table {
+            
+            border-collapse: collapse;
+        }
+        td, th {
+            padding: 8px;
+            text-align: center;
+        }
+        .btn {
+            padding: 5px 10px;
+            cursor: pointer;
+            color: #fff;
+            background-color: rgba(243, 6, 6, 0.914);
+        }
+        .btnb {
+            padding: 5px 10px;
+            cursor: pointer;
+            color: #fff;
+            background-color: rgba(59, 104, 239, 0.914);
+        }
+        #editModal {
+            display: none;
+            position: fixed;
+            top: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 2px solid #444;
+            padding: 20px;
+            z-index: 1000;
+            inline-size: 400px;
+           
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        #editModal input {
+            margin-block-end: 2px;
+            inline-size: 90%;
+            padding:10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GET Data table by using fetch method</h1>
+    <table border="2px">
+        <thead>
+            <tr>
+                <td rowspan="2">ID</td>
+                <td rowspan="2">Client_name</td>
+                <td rowspan="2">Msp_name</td>
+                <td rowspan="2">routing_partner_name</td>
+                <td rowspan="2">msp_percentage</td>
+                <td rowspan="2">percentage</td>
+                <td colspan="2">business_type</td>
+                <td colspan="2">Actions</td>
+            </tr>
+            <tr>
+                <td>business_type_name</td>
+                <td>business_type_id</td>
+                <td>Edit</td>
+                <td>Del</td>
+            </tr>
+        </thead>
+        <tbody id="tbody-block"></tbody>
+    </table>
+
+    <div id="editModal">
+        <h3>Edit Client</h3>
+        <form id="editForm">
+            <input type="hidden" id="edit-id" />
+            <label>Client Name: <input type="text" id="edit-client_name" required /></label>
+            <label>MSP Name: <input type="text" id="edit-msp_name" required /></label>
+            <label>Routing Partner: <input type="text" id="edit-routing_partner_name" required /></label>
+            <label>MSP %: <input type="number" step="0.01" id="edit-msp_percentage" required /></label>
+            <label>Percentage: <input type="number" step="0.01" id="edit-percentage" required /></label>
+            <label>Business Type: <input type="text" id="edit-business_type_name" required /></label>
+            <label>Start Date: <input type="date" id="edit-start_date" required /></label>
+            <label>End Date: <input type="date" id="edit-end_date" required /></label>
+            <label>File Path: <input type="text" id="edit-file_path" required /></label>
+            <button type="submit" class="btnb" style="margin-block-start: 10px;">Save</button>
+            <button type="button" onclick="closeModal()" class="btn">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        const tbody = document.getElementById('tbody-block');
+
+        function getData() {
+            fetch("https://rms-m7sb.onrender.com/client")
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(ele => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${ele.id}</td>
+                            <td>${ele.client_name}</td>
+                            <td>${ele.msp_name}</td>
+                            <td>${ele.routing_partner_name}</td>
+                            <td>${ele.msp_percentage}</td>
+                            <td>${ele.percentage}</td>
+                            <td>${ele.business_type?.name || ''}</td>
+                            <td>${ele.business_type?.id || ''}</td>
+                            <td><button class="btnb" onclick="editData(${ele.id})">Edit</button></td>
+                            <td><button class="btn" onclick="delData(${ele.id})">Del</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(err => console.log(err));
+        }
+
+        function editData(id) {
+            fetch(`https://rms-m7sb.onrender.com/client/${id}`)
+                .then(res => res.json())
+                .then(data => openEditModal(data))
+                .catch(err => console.error("Failed to load client data:", err));
+        }
+
+        function openEditModal(data) {
+            document.getElementById("edit-id").value = data.id;
+            document.getElementById("edit-client_name").value = data.client_name;
+            document.getElementById("edit-msp_name").value = data.msp_name;
+            document.getElementById("edit-routing_partner_name").value = data.routing_partner_name;
+            document.getElementById("edit-msp_percentage").value = data.msp_percentage;
+            document.getElementById("edit-percentage").value = data.percentage;
+            document.getElementById("edit-business_type_name").value = data.business_type?.name || '';
+            document.getElementById("edit-start_date").value = data.agreement_start_date || '';
+            document.getElementById("edit-end_date").value = data.agreement_end_date || '';
+            document.getElementById("edit-file_path").value = data.agreement_file_path || '';
+            document.getElementById("editModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("editModal").style.display = "none";
+        }
+
+        document.getElementById("editForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const id = document.getElementById("edit-id").value;
+
+            const updatedData = {
+                client_name: document.getElementById("edit-client_name").value,
+                msp_name: document.getElementById("edit-msp_name").value,
+                routing_partner_name: document.getElementById("edit-routing_partner_name").value,
+                msp_percentage: parseFloat(document.getElementById("edit-msp_percentage").value),
+                percentage: parseFloat(document.getElementById("edit-percentage").value),
+                business_type_name: document.getElementById("edit-business_type_name").value,
+                agreement_start_date: document.getElementById("edit-start_date").value,
+                agreement_end_date: document.getElementById("edit-end_date").value,
+                agreement_file_path: document.getElementById("edit-file_path").value,
+            };
+
+            fetch(`https://rms-m7sb.onrender.com/client/${id}/update`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData)
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Client updated successfully.");
+                        closeModal();
+                        location.reload();
+                    } else {
+                        return res.json().then(err => {
+                            console.error("Update error:", err);
+                            alert("Update failed.");
+                        });
+                    }
+                })
+                .catch(err => console.error("Fetch error:", err));
+        });
+
+        function delData(id) {
+            if (!confirm("Are you sure you want to delete this client?")) return;
+
+            fetch(`https://rms-m7sb.onrender.com/client/${id}/delete`, {
+                method: "DELETE"
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert(`Client ID ${id} deleted`);
+                        location.reload();
+                    } else {
+                        alert("Delete failed");
+                    }
+                })
+                .catch(err => console.log(err));
+        }
+
+        // Fetch data on load
+        getData();
+    </script>
+</body>
+</html>

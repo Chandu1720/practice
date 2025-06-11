@@ -1,0 +1,44 @@
+<!-- ## 📝 Exercises:
+1. Create an HTML file with `<h1>`, `<p>`, and a button.
+2. Access and log each element using `document.getElementById`.
+3. Change the paragraph text on button click. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="head">Welcome</h1>
+    <p id="paragraph">Paragraphs  are usually represented in visual media as blocks of text separated from adjacent blocks by blank lines and/or first-line indentation, but HTML paragraphs can be any structural grouping of related content, such as images or form fields.</p>
+    <ul>
+        <li>cc</li>
+        <li>ccc</li>
+        <li>ccc</li>
+    </ul>
+    <label >Name</label><br>
+    <input type="text" id="name">
+    <button type="button" onclick="res()" >Save</button>
+    <script>
+        function res(){
+                let cnt=0;
+                let y=document.querySelectorAll("li")
+                console.log(y);
+               cnt++
+                let helement=document.getElementById('head')
+                let pele=document.getElementById('paragraph')
+                let val=document.getElementById('name')
+                pele.textContent=val.value
+                helement.innerHTML="Welcome  Hi Everyone"
+               for(let i of y)
+               {
+                i.innerHTML=val.value;
+               }
+                
+        }
+    </script>
+</body>
+</html>

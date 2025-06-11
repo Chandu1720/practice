@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETCH_ID</title>
+
+    <style>
+        .box{
+            display: block;
+            margin: 25px;
+            margin-inline-start: 20%;
+        }
+        .btn{
+            border: 1pax black;
+            background: none;
+            inline-size: 100px;
+            padding: 5px;
+        }
+        .btn:hover{
+            cursor: pointer;
+            border: 2px white;
+            background: black;
+            color: white;
+        }
+       
+        .box input,label{
+            border: 2px solid whitesmoke;
+            padding: 5px;
+        }
+        .box input{
+            border: 2PX solid black;
+        }
+        table{
+            margin-inline-start: 20%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        h1{
+            margin: 50px;
+            margin-inline-start: 20%;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>THIS is GET DATA USING ID</h1>
+   <div class="box"> <label for="input">enterclient_id</label>
+    <input type="text"  id="client_id" min="1" placeholder="Enter client_id">
+    <button class="btn" onclick="search()">Search</button>
+    </div>
+    <table border="2px">
+        <thead>
+            <tr>
+                <td rowspan="2">ID</td>
+                <td rowspan="2">Client_name</td>
+                <td rowspan="2">Msp_name</td>
+                <td rowspan="2">routing_partner_name</td>
+                <td rowspan="2">msp_percentage</td>
+                <td rowspan="2">percentage</td>
+                <td colspan="2">business_type</td>
+            </tr>
+            <tr>
+                <td>business_type_name</td>
+                <td>business_type_id</td>
+            </tr>
+        </thead>
+        <tbody id="tbody-block">
+            
+        </tbody>
+    </table>
+    <script>
+    let tbody = document.getElementById('tbody-block');
+    function getclient(id) {
+        let url = `https://rms-m7sb.onrender.com/client/${id}`;
+
+fetch(url)
+.then((res) => res.json())
+.then((ele) => {
+if (!ele.id ) {
+            alert(`Client ID ${id} does not exist.`);
+            return;
+        }
+    tbody.innerHTML=''
+  let cell1 = document.createElement('td');
+  let cell2 = document.createElement('td');
+  let cell3 = document.createElement('td');
+  let cell4 = document.createElement('td');
+  let cell5 = document.createElement('td');
+  let cell6 = document.createElement('td');
+  let cell7 = document.createElement('td');
+  let cell8 = document.createElement('td');
+  let row = document.createElement('tr');
+
+  cell1.textContent = ele.id;
+  cell2.textContent = ele.client_name;
+  cell3.textContent = ele.msp_name;
+  cell4.textContent = ele.routing_partner_name;
+  cell5.textContent = ele.msp_percentage;
+  cell6.textContent = ele.percentage;
+  cell7.textContent = ele.business_type.name;
+  cell8.textContent = ele.business_type.id;
+
+  row.appendChild(cell1);
+  row.appendChild(cell2);
+  row.appendChild(cell3);
+  row.appendChild(cell4);
+  row.appendChild(cell5);
+  row.appendChild(cell6);
+  row.appendChild(cell7);
+  row.appendChild(cell8);
+
+  tbody.appendChild(row);
+})
+
+.catch((err) => console.log(err))
+     }
+ function search(){  
+    let client_id=document.getElementById('client_id').value       
+     if(client_id)
+     {
+        console.log(client_id);
+        
+        getclient(client_id);
+     }
+     else{
+        console.log("enter id");
+     }
+ }
+</script>
+</body>
+</html>

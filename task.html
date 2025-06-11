@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <style>
+        main{
+            display: flex;
+            flex-direction: row;
+        }
+        .userform{
+            display: block;
+            inline-size: 50%;
+        }
+        form{
+            margin-block-start: 100px;
+            background-color: #fff;
+            padding : 30px;
+            inline-size: 300px;
+            border-radius: 10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+           justify-content: center;
+           margin-inline-start: 20%;  
+        }
+        div{
+            display: block;
+            margin-block-end: 2%;
+        }
+        .fl{
+            display: flex;
+            flex-direction: row;
+            gap:15px;
+        }
+        .button{
+            inline-size: 50%;
+            color: white;
+            border: 1px solid black;
+             background-color: #cb5714;
+            padding: 10px;
+             margin-block-start:20px;
+            cursor: pointer;
+        }
+        form input{
+            inline-size: 100%;
+            padding:10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .rad{
+            margin-top: 10px;
+            display: inline-flex;
+            gap: 10px;
+            text-align: center;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            inline-size: 100%;
+
+        }
+        .rad label{
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+        }
+        #usertable{
+            display: block;
+            inline-size: 50%;
+            margin-block-start: 7%;
+            margin-inline-start: 10%;
+        }
+        .hide{
+            display: none;
+        }
+        .show{
+            display: inline-block;
+        }
+        .btn{
+        inline-size: 50px;
+            color: rgb(18, 17, 17);
+            margin-block-end: 10px;
+            
+        }
+      .btnred{
+        
+            color: rgb(18, 17, 17);
+            margin-block-end: 10px;
+            
+        }
+        .btnblue{
+            color: rgb(18, 17, 17);
+            margin-block-end: 10px;
+            
+        }
+        .btnred:hover{
+            background: #e60000;
+            color: #fff;
+        }
+        .btnblue:hover{
+            background: #52b9de;
+            color: #fff;
+        }
+.popupbody {
+    display: none;
+    inline-size: 600px;
+    position: fixed;
+    z-index: 1;
+    margin-block-start: 11%;
+    margin-inline-start: 38%;
+    background: white/* Gradient background */;
+    color: #080808;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popupbody.show {
+    display: block;
+    opacity: 1;
+}
+
+.popupdata {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two-column grid */
+    gap: 20px;
+    font-size: 1.1rem;
+    color: #100f0f;
+    border-radius: 8px;
+}
+
+.popupdata label {
+    font-weight: bold;
+    color: #020202;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.popupdata span {
+    color: #fff;
+    padding: 8px 12px;
+    background-color: #2c3e50;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.popupdata span:hover {
+    background-color: #3498db; /* Hover effect for values */
+    cursor: pointer;
+}
+
+.popupdata div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: rgb(249, 248, 248);
+    color: white;
+    padding: 8px 20px;
+    border: 2px black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+   
+}
+
+button:hover {
+    background-color: #c0392b; /* Button hover effect */
+}
+
+button:focus {
+    outline: none;
+}
+
+.close-btn {
+    background-color: transparent;
+    border: none;
+    color: #121111;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1px;
+    right: 11px;
+    cursor: pointer;
+}
+
+    .cell1:hover{
+        cursor: pointer;
+    }
+    
+
+       
+    </style>
+
+</head>
+<body>
+  <section class="popupbody">
+    <button class="close-btn" onclick="closePopup()">cls(x)</button>
+    <div class="popupdata">
+        <div>
+            <label for="fnId">First Name:</label>
+            <span id="fnId"></span>
+        </div>
+        <div>
+            <label for="lnId">Last Name:</label>
+            <span id="lnId"></span>
+        </div>
+        <div>
+            <label for="elid">Email:</label>
+            <span id="elid"></span>
+        </div>
+        <div>
+            <label for="mnId">Mobile Number:</label>
+            <span id="mnId"></span>
+        </div>
+        <div>
+            <label for="gid">Gender:</label>
+            <span id="gid"></span>
+        </div>
+    </div>
+</section>
+
+    <main>
+    <section>
+        <div class="userform">
+            <form>
+                <div class="username">
+                    <div>
+                        <div><label for="firstName">Firstname</label></div>
+                <input type="text" name="lastName" id="firstnameId" required>
+
+                    </div>
+                </div>
+                <div>
+                <div><label >Lastname</label></div>
+                <input type="text" name="lastName" id="lastnameId" required>
+            </div>
+                
+              <div><div><label >E-mail</label></div><input type="email" name="maile" id="email-id" required></div>
+                
+               <div><div><label >mobileNumber</label></div><input type="tel" name="mobile" id="mobileId" maxlength="10" required></div>
+              <div class="rad">
+                <div><label>Gender:</label></div>
+            <input type="radio" name="gender" id="maleId" value="Male"><label for="">Male</label>
+           <input type="radio" name="gender" id="femaleId" value="Female"><label for="">Female</label>
+            </div>
+
+
+                <div class="fl"><button type="submit" id="submitbtn" class="button" onclick="sendData()">Save</button>
+                <button type="reset" class="button">Reset</button>
+            </form>
+        </div>
+        </section>
+       
+        <div id ="usertable">
+            <button type="button" class="btn btn-outline-dark" onclick="clearData()" style="width: 100px;">clear</button>
+            <table id="emptable" class="table table-bordered border-primary">
+                <thead>
+                    <tr>
+                        <th rowspan="2">S.No</th>
+                        <th rowspan="2">Firstname</th>
+                        <th rowspan="2">Lastname</th>
+                        <th rowspan="2">Email</th>
+                        <th rowspan="2">mobileNumber</th>
+                        <th rowspan="2">Gender</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    <tr>
+                        <th>EDIT</th>
+                        <th>EDIT</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+
+                </tbody>
+            </table>
+
+        </div>
+      
+</main>
+
+<script>
+                 let emparray=[]
+                let firstName=document.getElementById('firstnameId')
+                let lastName=document.getElementById('lastnameId')
+                let email=document.getElementById('email-id')
+                let mobile=document.getElementById('mobileId')
+                let emptable=document.getElementById('emptable')
+                let tbody=document.getElementById('table-body')
+                let result=document.getElementById('usertable')
+                let submitbtn=document.getElementById('submitbtn');
+                  let popupFristname=document.getElementById('fnId')
+                    let popupLasttname=document.getElementById('lnId')
+                    let popupEmail=document.getElementById('elid')
+                    let popupMobil=document.getElementById('mnId')
+                    let popupgender=document.getElementById('gid')
+                    let popupbody=document.getElementsByClassName("popupbody")
+                    popupbody[0].classList.add("hide");
+            let empdata=JSON.parse(localStorage.getItem("emps"))
+             emparray=empdata?empdata:[]
+function closePopup() {
+    document.querySelector(".popupbody").classList.remove("show");
+}
+
+function showPopup(data,i) {
+    console.log(data,i);
+    
+    document.querySelector(".popupbody").classList.add("show");
+    document.getElementById("fnId").textContent = data[i].firstname;
+    document.getElementById("lnId").textContent = data[i].lastname;
+    document.getElementById("elid").textContent = data[i].email;
+    document.getElementById("mnId").textContent = data[i].mobile;
+    document.getElementById("gid").textContent = data[i].gender;
+}
+
+        // submitbtn.addEventListener("click",()=>{
+        //     sendData();
+        // })
+
+      
+             function clearData(){
+                emparray=[]
+                localStorage.clear();
+                createTable();
+             }
+           
+        function createTable(){
+            let empdata=JSON.parse(localStorage.getItem("emps"))||[]
+            console.log(empdata);
+            if(empdata.length==0)
+            {
+                emptable.classList.add("hide")
+                result.innerHTML="No data"
+            
+            }
+            else{
+                emptable.classList.add("show")
+                emptable.classList.remove("hide")
+                tbody.innerHTML='';
+                empdata.forEach((ele,index) => {
+                    let row=document.createElement('tr')
+                    let cell0=document.createElement('td')
+                    let cell1=document.createElement('td')
+                    let cell2=document.createElement('td')
+                    let cell3=document.createElement('td')
+                    let cell4=document.createElement('td')
+                    let cell5=document.createElement('td')
+                    let cell6=document.createElement('td')
+                    let cell7=document.createElement('td')
+                    let editbtn=document.createElement('button')
+                    let delbtn=document.createElement('button')
+                    editbtn.textContent="Edit"
+                    delbtn.textContent="Del"
+                    editbtn.classList.add('btnblue')
+                    delbtn.classList.add('btnred')
+                    cell6.appendChild(editbtn)
+                    cell7.appendChild(delbtn)
+                    cell0.textContent=`${index+1}`
+                    cell1.textContent=ele.firstname
+                    cell2.textContent=ele.lastname
+                    cell3.textContent=ele.email
+                    cell4.textContent=ele.mobile
+                    cell5.textContent=ele.gender
+                    row.appendChild(cell0)
+                    row.appendChild(cell1)
+                    row.appendChild(cell2)
+                    row.appendChild(cell3)
+                    row.appendChild(cell4)
+                    row.appendChild(cell5)
+                    row.appendChild(cell6)
+                    row.appendChild(cell7)
+                    // row.appendChild(cell7)
+                    tbody.appendChild(row)
+                    editbtn.addEventListener("click",()=>{
+                        alert("are you sure")
+                        editIndex = index;
+                        firstName.value = ele.firstname;
+                        lastName.value = ele.lastname;
+                        email.value = ele.email;
+                        mobile.value = ele.mobile;
+                       if(ele.gender){ document.querySelector(`input[value='${ele.gender}']`).checked = true;}
+                        submitbtn.textContent="Update"
+                        submitbtn.setAttribute('onClick',`update(${index})`)
+                    })
+                    delbtn.addEventListener("click",()=>{
+                        let res =  confirm(`are you sure to del ${ele.firstname}`)
+                        if(res){
+                                emparray.splice(index,1)
+                                empdata=localStorage.setItem("emps",JSON.stringify(emparray))
+                                createTable();
+                                alert(` del ${ele.firstname} is sucuss`)
+                        }
+                        else{
+                            alert(` del ${ele.firstname} is failed`)
+                        }
+                       
+                    })
+                    cell1.classList.add("cell1")
+                    cell1.addEventListener("click",()=>{
+                       
+                        showPopup(empdata,index)
+                    
+                    })
+                });
+            }
+        }
+        function update(i){
+            submitbtn.textContent="submit"
+            submitbtn.setAttribute("onClick","sendData()")
+            let gender;
+                let genderList=document.querySelectorAll("input[name='gender']")
+                for(let g of genderList)
+                {
+                    if(g.checked)
+                    {
+                        gender=g.value
+                        break;
+                    }
+                }
+                    let emp={
+                        "firstname":firstName.value,
+                        "lastname":lastName.value,
+                        "email":email.value,
+                        "mobile":mobile.value,
+                        "gender":gender
+                    }
+                    emparray[i]=emp;
+                    localStorage.setItem("emps",JSON.stringify(emparray))
+                    createTable()
+                    alert("update succsfull")
+          
+        }
+        createTable()
+        function sendData(){
+        let editIndex=null;
+            let gender;
+                let genderList=document.querySelectorAll("input[name='gender']")
+                for(let g of genderList)
+                {
+                    if(g.checked)
+                    {
+                        gender=g.value
+                        break;
+                    }
+                }
+                    let emp={
+                        "firstname":firstName.value,
+                        "lastname":lastName.value,
+                        "email":email.value,
+                        "mobile":mobile.value,
+                        "gender":gender
+                    }
+                    if (editIndex !== null) {
+        emparray[editIndex] = emp;
+        editIndex = null;
+        submitbtn.textContent = "Save";
+    } else {
+        emparray.push(emp);
+    }
+                    localStorage.setItem("emps",JSON.stringify(emparray))
+                    createTable()
+                }
+</script>
+</body>
+</html>

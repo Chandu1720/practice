@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class-based Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    main {
+      display: flex;
+    }
+    .userform {
+      inline-size: 50%;
+    }
+    form {
+      margin-top: 100px;
+      padding: 30px;
+      inline-size: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      margin-left: 20%;
+    }
+    .fl {
+      display: flex;
+      gap: 10px;
+    }
+    form input {
+      inline-size: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .rad {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .button {
+      background-color: #cb5714;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #usertable {
+      inline-size: 50%;
+      margin-top: 80px;
+      margin-left: 0%;
+    }
+    .btnred:hover {
+      background-color: red;
+      color: white;
+    }
+    .btnblue:hover {
+      background-color: #52b9de;
+      color: white;
+    }
+    .cell1:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .popupbody {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 30%;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+    .popupbody.show {
+      display: block;
+    }
+    .popupdata {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .popupdata label {
+      font-weight: bold;
+    }
+    .popupdata span {
+      background-color: #2c3e50;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<section class="popupbody" id="popup">
+  <button class="close-btn" onclick="document.getElementById('popup').classList.remove('show')">✖</button>
+  <div class="popupdata">
+    <div><label>First Name:</label><span id="popup-fn"></span></div>
+    <div><label>Last Name:</label><span id="popup-ln"></span></div>
+    <div><label>Email:</label><span id="popup-email"></span></div>
+    <div><label>Mobile:</label><span id="popup-mobile"></span></div>
+    <div><label>Gender:</label><span id="popup-gender"></span></div>
+  </div>
+</section>
+
+<main>
+  <section class="userform">
+    <form id="user-form">
+      <label>First Name</label>
+      <input type="text" id="firstname" required>
+      <label>Last Name</label>
+      <input type="text" id="lastname" required>
+      <label>Email</label>
+      <input type="email" id="email" required>
+      <label>Mobile</label>
+      <input type="tel" id="mobile" maxlength="10" required>
+      <div class="rad">
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="Male" id="male"> <label for="male">Male</label>
+        <input type="radio" name="gender" value="Female" id="female"> <label for="female">Female</label>
+      </div>
+      <div class="fl">
+        <button type="submit" class="button" id="submitBtn">Save</button>
+        <button type="reset" class="button">Reset</button>
+      </div>
+    </form>
+  </section>
+
+  <div id="usertable">
+    <button type="button" class="btn btn-outline-dark mb-3" id="clearBtn">Clear All</button>
+    <table class="table table-bordered border-primary">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Gender</th>
+          <th>Edit</th>
+          <th>Del</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+class UserManager {
+  constructor() {
+    this.users = [];
+    this.editIndex = null;
+
+    this.form = document.getElementById("user-form");
+    this.tableBody = document.getElementById("table-body");
+
+    this.firstName = document.getElementById("firstname");
+    this.lastName = document.getElementById("lastname");
+    this.email = document.getElementById("email");
+    this.mobile = document.getElementById("mobile");
+
+    this.submitBtn = document.getElementById("submitBtn");
+    this.clearBtn = document.getElementById("clearBtn");
+
+    this.form.addEventListener("submit", (e) => this.handleSubmit(e));
+    this.clearBtn.addEventListener("click", () => this.clearAll());
+
+    this.renderTable();
+  }
+
+  getGender() {
+    const genderInputs = document.querySelectorAll("input[name='gender']");
+    for (let input of genderInputs) {
+      if (input.checked) return input.value;
+    }
+    return "";
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const user = {
+      firstname: this.firstName.value,
+      lastname: this.lastName.value,
+      email: this.email.value,
+      mobile: this.mobile.value,
+      gender: this.getGender()
+    };
+
+    if (this.editIndex !== null) {
+      this.users[this.editIndex] = user;
+      this.editIndex = null;
+      this.submitBtn.textContent = "Save";
+    } else {
+      this.users.push(user);
+    }
+
+    this.form.reset();
+    this.renderTable();
+  }
+
+  renderTable() {
+    this.tableBody.innerHTML = "";
+
+    this.users.forEach((user, index) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td class="cell1">${user.firstname}</td>
+        <td>${user.lastname}</td>
+        <td>${user.email}</td>
+        <td>${user.mobile}</td>
+        <td>${user.gender}</td>
+        <td><button class="btn btnblue">Edit</button></td>
+        <td><button class="btn btnred">Del</button></td>
+      `;
+
+      row.querySelector(".btnblue").addEventListener("click", () => this.editUser(index));
+      row.querySelector(".btnred").addEventListener("click", () => this.deleteUser(index));
+      row.querySelector(".cell1").addEventListener("click", () => this.showPopup(user));
+
+      this.tableBody.appendChild(row);
+    });
+  }
+
+  editUser(index) {
+    const user = this.users[index];
+    this.firstName.value = user.firstname;
+    this.lastName.value = user.lastname;
+    this.email.value = user.email;
+    this.mobile.value = user.mobile;
+    document.querySelector(`input[value="${user.gender}"]`).checked = true;
+    this.editIndex = index;
+    this.submitBtn.textContent = "Update";
+  }
+
+  deleteUser(index) {
+    if (confirm(`Delete ${this.users[index].firstname}?`)) {
+      this.users.splice(index, 1);
+      this.renderTable();
+    }
+  }
+
+  clearAll() {
+    if (confirm("Clear all data?")) {
+      this.users = [];
+      this.renderTable();
+    }
+  }
+
+  showPopup(user) {
+    document.getElementById("popup-fn").textContent = user.firstname;
+    document.getElementById("popup-ln").textContent = user.lastname;
+    document.getElementById("popup-email").textContent = user.email;
+    document.getElementById("popup-mobile").textContent = user.mobile;
+    document.getElementById("popup-gender").textContent = user.gender;
+    document.getElementById("popup").classList.add("show");
+  }
+}
+
+const userManager = new UserManager();
+</script>
+</body>
+</html>

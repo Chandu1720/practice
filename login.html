@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      block-size: 100vh;
+      margin: 0;
+    }
+    .form {
+      background: #fff;
+      inline-size: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form div {
+      margin-block-end: 15px;
+    }
+    .form label {
+      display: block;
+      margin-block-end: 5px;
+    }
+    .form input {
+      inline-size: 90%;
+      padding: 10px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    button {
+      color: #fff;
+      background-color: goldenrod;
+      padding: 10px;
+      margin-inline-start: 140px;
+      cursor: pointer;
+    }
+    button:hover {
+      color: goldenrod;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<form class="form">
+  <div>
+    <label for="user">UserId</label>
+    <input type="text" id="user" name="UserId">
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="Password">
+  </div>
+  <button type="submit" onclick="event.preventDefault(); getData()">SUBMIT</button>
+</form>
+
+<script>
+  function validatePassword(pwd) {
+    // Must be 6+ characters with at least one uppercase, lowercase, number, and special character
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    return regex.test(pwd);
+  }
+
+  function getData() {
+    let enteredUserId = document.getElementById('user').value.trim();
+    let enteredPassword = document.getElementById('password').value.trim();
+
+    if (!enteredUserId || !enteredPassword) {
+      alert("Please fill in both fields.");
+      return;
+    }
+
+    if (!validatePassword(enteredPassword)) {
+      alert("Password must be at least 6 characters long and include uppercase, lowercase, number, and special character.");
+      return;
+    }
+
+    let emp = JSON.parse(localStorage.getItem("emps") || "[]");
+
+  
+
+    if (  emp.userid === enteredUserId) {
+      if (emp.password === enteredPassword) {
+        alert(`${emp.firstName} logged in successfully`);
+        window.location.href="./fetch.html"
+      } else {
+        alert(`Login failed: Incorrect password`);
+      }
+    } else {
+      alert(`Login failed: User not found`);
+    }
+  }
+</script>
+
+</body>
+</html>
