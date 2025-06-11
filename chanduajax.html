@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+<body>
+    <h1>THIS IS USING AJAX FOR GET DATA</h1>
+    <form >
+        <label for="client_id">Client Name:</label>
+    <input type="text" id="client_id" required>
+
+    <label for="msp_id">MSP Name:</label>
+    <input type="text" id="msp_id" required>
+
+    <label for="routing_id">Routing Partner Name:</label>
+    <input type="text" id="routing_id">
+
+    <button type="submit" onclick="event.preventDefault(); postData();">Post Data</button>
+
+    </form>
+  
+    <script>
+           
+            
+        function postData(){
+      let clientName = document.getElementById('client_id').value;
+      let mspName = document.getElementById('msp_id').value;
+      let routingName = document.getElementById('routing_id').value;
+        let xhr=new XMLHttpRequest();
+        xhr.open("POST","https://rms-m7sb.onrender.com/client/create",true)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.onload=function (){
+            console.log(xhr.responseText);
+            if (xhr.status === 201) {
+          window.location.href = "./ajaxget.html";
+        }
+        }
+        let data ={
+                    "client_name": clientName,
+                    "msp_name": mspName,
+                    "routing_partner_name": routingName,
+                    "msp_percentage": 0,
+                    "percentage": 0,
+                    "business_type_name": "test",
+                    "agreement_start_date": "2025-05-08",
+                    "agreement_end_date": "2025-05-08",
+                    "agreement_file_path": "string"
+                 }
+        xhr.send(JSON.stringify(data))
+    }
+    
+
+    </script>
+</body>
+</html>

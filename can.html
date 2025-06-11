@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1000;
+      inset-inline-start: 0;
+      inset-block-start: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px 30px;
+      border-radius: 10px;
+      inline-size:  80%;
+      max-inline-size: 800px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #007bff;
+      color: white;
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .modal-body {
+      padding: 20px 0;
+    }
+
+    /* .form-group {
+      margin-block-end: 15px;
+    } */
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-block-end: 5px;
+    }
+
+    .form-group input {
+      inline-size: 95%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      /* margin-block-start: 5px; */
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-row .form-group {
+      flex: 1 1 45%;
+    }
+
+    .modal-footer {
+      text-align: end;
+      padding-block-start: 10px;
+    }
+        table {
+      border-collapse: collapse;
+      inline-size: 100%;
+      margin-block-start: 30px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f5f5f5;
+    }
+    </style>
+
+</head>
+<body>
+    <h1>hi all</h1>
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="head"></h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="employeeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label id="lname">Name</label>
+                            <input type="text" name="name" id="nameid" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label id="le">Email</label>
+                            <input type="email" name="email" id="mailid" value="user@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label id="lm">Mobile Number</label>
+                            <input type="tel" name="mobile_number" id="numid" placeholder="Enter number">
+                        </div>
+                        <div class="form-group">
+                            <label id="ldb">Date of brith</label>
+                            <input type="date" name="date_of_joinning" id="did" value="2025-05-14">
+                        </div>
+                        <div class="form-group">
+                            <label id="lag">age</label>
+                            <input type="text" name="job_role" id="jid">
+                        </div>
+                        <div class="form-group">
+                            <label id="lge">gender</label>
+                            <input type="text" name="location" id="locid">
+                        </div>
+                        <div class="form-group">
+                            <label>id</label>
+                            <input type="text" name="department" id="depid">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    <table border="2px">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PERSONAL_DETAIL</th>
+                <th>KYC</th>
+                <th>ADDRESS</th>
+                <th>EDUCATION</th>
+                <th>EMPLOYMENT</th>
+                <th>CANDIDATE_BUSSINESS_TYPE </th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+    <script>
+        let tbody=document.getElementById('table-body');
+        fetch("https://rms-m7sb.onrender.com/candidate/")
+        .then((res)=>res.json())
+        .then((data)=>{console.log(data)
+            data.forEach(ele => {
+                let row =document.createElement('tr');
+                let cell1=document.createElement('td');
+                let cell2=document.createElement('td');
+                let cell3=document.createElement('td');
+                let cell4=document.createElement('td');
+                let cell5=document.createElement('td');
+                let cell6=document.createElement('td');
+                let cell7=document.createElement('td');
+                cell1.textContent=`${ele.id}`
+                cell2.textContent=`${ele.personal_detail?.first_name||"N/A"}`
+                cell3.textContent=`${ele.kyc?.pan_number||"N/A"}`
+                cell4.textContent=`${ele.address.current_city+" "+ele.address.current_state}`
+                cell5.textContent=`${ele.education[0].education_type}`
+                cell6.textContent=`${ele.employement[0].designation+" "+ele.employement[0].client_company}`
+                cell7.textContent=`${ele.candidate_bussiness_type.offered_salary}`
+                row.appendChild(cell1)
+                row.appendChild(cell2)
+                row.appendChild(cell3)
+                row.appendChild(cell4)
+                row.appendChild(cell5)
+                row.appendChild(cell6)
+                row.appendChild(cell7)
+                tbody.appendChild(row)
+                cell2.addEventListener("click",function(){
+                    ele1=ele.personal_detail
+                    document.getElementById("head").textContent="Personal_Details"
+                    document.getElementById("employeeModal").style.display="block"
+                    document.getElementById("nameid").value =`${ele1.first_name+""+ele1.last_name}`
+                    document.getElementById("mailid").value=ele1.email
+                    document.getElementById("numid").value=ele1.mobile_number
+                    document.getElementById("did").value=ele1.dob
+                    document.getElementById("jid").value=ele1.age
+                    document.getElementById("locid").value=ele1.gender
+                    document.getElementById("depid").value=ele1.id
+                })
+                cell3.addEventListener("click",()=>{
+                    const kyc=ele.kyc
+                    document.getElementById("head").textContent="KYC_Details"
+                    document.getElementById("employeeModal").style.display="block"
+                    document.getElementById("lname").textContent="aadhar_document"
+                    document.getElementById("le").textContent="aadhar_number"
+                    document.getElementById("lm").textContent="pan_document"
+                    document.getElementById("ldb").style.display="none";
+                    document.getElementById("lag").textContent="pan_number"
+                    document.getElementById("lge").style.display="none";
+                    document.getElementById("nameid").value =`${kyc.aadhar_document?"YES":"NO"}`
+                    document.getElementById("mailid").value=kyc.aadhar_number
+                    document.getElementById("numid").value=kyc.pan_document
+                    document.getElementById("did").style.display="none"
+                    document.getElementById("jid").value=kyc.pan_number
+                    document.getElementById("locid").style.display="none"
+                    document.getElementById("depid").value=kyc.id
+                })
+                 cell4.addEventListener("click",()=>{
+                    const add=ele.address
+                    document.getElementById("head").textContent="CURRENT_ADDRESS"
+                    document.getElementById("employeeModal").style.display="block"
+                    document.getElementById("lname").textContent="current_city"
+                    document.getElementById("le").textContent="current_country"
+                    document.getElementById("lm").textContent="current_door_no"
+                    document.getElementById("ldb").style.display="none";
+                    document.getElementById("lag").textContent="current_state"
+                    document.getElementById("lge").textContent="current_zip";
+                    document.getElementById("nameid").value =add.current_city
+                    document.getElementById("mailid").value=add.current_Country
+                    document.getElementById("numid").value=add.current_door_no
+                    document.getElementById("did").style.display="none"
+                    document.getElementById("jid").value="current_state"
+                    document.getElementById("locid").value="current_zip"
+                    document.getElementById("depid").value=add.id
+                })
+            });
+            
+        })
+        .catch((err)=>console.log(err))
+function closeModal() {
+    document.getElementById("employeeModal").style.display = "none";
+  }
+    </script>
+</body>
+</html>

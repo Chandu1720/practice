@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <button onclick="postData()">post data</button>
+    <div id="table-block">
+        <div class="btngroup">
+            <button type="button" onclick="clearData()">Clear</button>
+        </div>
+        <table id="empTable" border="2">
+            <thead>
+                <tr>
+                    <th>client_name</th>
+                    <th>msp_name</th>
+                    <th>routing_partner_name</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-block">
+                <!-- <tr id="trow-data">
+                    <td id="getName"></td>
+                    <td id="geteEmail"></td>
+                </tr>   -->
+            </tbody>
+        </table>
+
+        <script>
+            let tbody = document.getElementById('tbody-block');
+            //ajax = asynchronous javascript and xml(JSON)
+
+            let xhr = new XMLHttpRequest(); //create a new request object
+            function postData() {
+                xhr.onload = function () {
+                    if (xhr.status == 200 && xhr.readyState == 4) {
+                        let data = JSON.parse(this.responseText)
+                        console.log(data);
+
+                    }
+                }
+                xhr.open("POST", "https://rms-m7sb.onrender.com/client/create", true);
+
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                let data = {
+                    "client_name": "test2",
+                    "msp_name": "",
+                    "routing_partner_name": "",
+                    "msp_percentage": 0,
+                    "percentage": 0,
+                    "business_type_name": "string",
+                    "agreement_start_date": "2025-05-07",
+                    "agreement_end_date": "2025-05-07",
+                    "agreement_file_path": "string"
+                }
+                xhr.send(JSON.stringify(data));
+
+            }
+            getData()
+
+            function getData() {
+                xhr.onload = function () {
+                    if (xhr.status == 200 && xhr.readyState == 4) {
+                        let data = JSON.parse(this.responseText)
+                        console.log(data);
+                        data.forEach(ele => {
+
+                            let row = document.createElement('tr');
+                            let cell1 = document.createElement('td');
+                            let cell2 = document.createElement('td');
+                            let cell3 = document.createElement('td');
+                            cell1.textContent = ele.client_name;
+                            cell2.textContent = ele.msp_name;
+                            cell3.textContent = ele.routing_partner_name;
+
+                            row.appendChild(cell1);
+                            row.appendChild(cell2);
+                            row.appendChild(cell3);
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                xhr.open("GET", "https://rms-m7sb.onrender.com/client", true);
+                xhr.send()
+            }
+
+            // let x = 10;
+            // let y = 20;
+            // let user;
+
+            // setTimeout(()=>{user = "hello";
+            //     console.log(user);
+
+            // }, 2000) // getting data from api;
+            // console.log("user: " ,user); // this will print undefined because the data is not yet received from the api
+
+            // es6 fetch method
+         function getclient(id) {
+            let url = `https://rms-m7sb.onrender.com/client/${id}`;
+
+fetch(url)
+    .then((res) => res.json())
+    .then((data) => console.log("fetchmethod:", data))
+    .catch((err) => console.log(err))
+
+//post  using fetch 
+fetch(postUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "client_name": "client1",
+            "msp_name": "msp1",
+            "routing_partner_name": "routing_partner1",
+        })
+    })
+    .then((res) => res.json())
+    .then((data) =>{
+        console.log(data);
+        getTable(data);
+    })
+    .catch((err) => console.log(err))
+         }
+         getclient(6)
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TABLE</title>
+</head>
+<body>
+    <table border="2px">
+        <thead>
+            <tr>
+                <td rowspan="2">ID</td>
+                <td rowspan="2">Client_name</td>
+                <td rowspan="2">Msp_name</td>
+                <td rowspan="2">routing_partner_name</td>
+                <td rowspan="2">msp_percentage</td>
+                <td rowspan="2">percentage</td>
+                <td colspan="2">business_type</td>
+                <td colspan="2">Actions</td>
+            </tr>
+            <tr>
+                <td>business_type_name</td>
+                <td>business_type_id</td>
+                <td>Edit</td>
+                <td >Del</td>
+            </tr>
+        </thead>
+        <tbody id="tbody-block">
+            
+        </tbody>
+    </table>
+    <script>
+        getData()
+       function getData(){
+        let table=document.getElementById('tbody-block')
+        let xhr= new XMLHttpRequest();
+        xhr.open("GET","https://rms-m7sb.onrender.com/client/",true)
+        xhr.onload=function (){
+            if(xhr.readyState===4 && xhr.status===200)
+        {
+            let data= JSON.parse( xhr.responseText)
+       data.forEach(ele => {
+        let cell1=document.createElement('td')
+        let cell2=document.createElement('td')
+        let cell3=document.createElement('td')
+        let cell4=document.createElement('td')
+        let cell5=document.createElement('td')
+        let cell6=document.createElement('td')
+        let cell7=document.createElement('td')
+        let cell8=document.createElement('td')
+        let cell9=document.createElement('td')
+        let cell10=document.createElement('td')
+        let row=document.createElement('tr')
+            cell1.textContent=ele.id
+            cell2.textContent=ele.client_name
+            cell3.textContent=ele.msp_name
+            cell4.textContent=ele.routing_partner_name
+            cell5.textContent=ele.msp_percentage
+            cell6.textContent=ele.percentage
+            cell7.textContent=ele.business_type.name
+            cell8.textContent=ele.business_type.id
+            cell9.innerHTML=`<button onclick="edit()">edit</button>`
+            cell10.innerHTML=`<button onclick="del()">del</button>`
+            // cell9.appendChild(cell10)
+            row.appendChild(cell1)
+            row.appendChild(cell2)
+            row.appendChild(cell3)
+            row.appendChild(cell4)
+            row.appendChild(cell5)
+            row.appendChild(cell6)
+            row.appendChild(cell7)
+            row.appendChild(cell8)
+            row.appendChild(cell9)
+            row.appendChild(cell10)
+            table.appendChild(row)
+
+       }); 
+        }
+        }
+      
+      
+        xhr.send()
+    }
+    </script>
+</body>
+</html>

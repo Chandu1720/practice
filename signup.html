@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form {
+      background: #fff;
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form div {
+      margin-bottom: 15px;
+    }
+    .form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    button {
+      color: #fff;
+      background-color: goldenrod;
+      padding: 10px;
+      margin-left: 140px;
+      cursor: pointer;
+    }
+    button:hover {
+      color: goldenrod;
+      background-color: #fff;
+    }
+    a {
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <form class="form">
+    <div>
+      <label for="first_id">FIRSTNAME</label>
+      <input type="text" id="first_id" name="FIRSTNAME">
+    </div>
+    <div>
+      <label for="last_id">LASTNAME</label>
+      <input type="text" id="last_id" name="LASTNAME">
+    </div>
+    <div>
+      <label for="user">UserId (must include @)</label>
+      <input type="text" id="user" name="UserId">
+    </div>
+    <div>
+      <label for="password">Password (min 6 chars, 1 number, 1 special char)</label>
+      <input type="password" id="password" name="Password">
+    </div>
+    <button type="submit" onclick="event.preventDefault(); saveData()">SUBMIT</button>
+    <a href="./login.html">LOGIN</a>
+  </form>
+
+  <script>
+    function saveData() {
+      let firstName = document.getElementById('first_id').value.trim();
+      let lastName = document.getElementById('last_id').value.trim();
+      let userId = document.getElementById('user').value.trim();
+      let password = document.getElementById('password').value.trim();
+
+      // Validation
+      if (!firstName || !lastName || !userId || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (!userId.includes("@")) {
+        alert("UserId must include '@' symbol.");
+        return;
+      }
+
+      const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+      if (!passwordRegex.test(password)) {
+        alert("Password must be at least 6 characters and include at least one digit and one special character.");
+        return;
+      }
+
+      // Save to localStorage
+      const emp = {
+        firstname: firstName,
+        lastname: lastName,
+        userid: userId,
+        password: password
+      };
+
+      localStorage.setItem("emps", JSON.stringify(emp));
+      alert("Registration successful!");
+    }
+  </script>
+</body>
+</html>
