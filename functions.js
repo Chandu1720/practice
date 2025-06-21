@@ -130,17 +130,17 @@
 // what is closure?
 // closure is like a function that remembers the scope of varaibles simplly A closure gives you access to an outer function’s variables from an inner function, even after the outer function has returned.
 
-function person(name,age){
-        let score=0;
-        return {
-            getName:()=>name,
-            getAge:()=>age,
-            incScore:()=>score++,
-            getScore:()=>score
-        }
-}
-let b= person("chandu",21)
-console.log(b.getName());
-console.log(b.getAge());
-b.incScore();
-console.log(b.getScore());
+// function person(name,age){
+//         let score=0;
+//         return {
+//             getName:()=>name,
+//             getAge:()=>age,
+//             incScore:()=>score++,
+//             getScore:()=>score
+//         }
+// }
+// let b= person("chandu",21)
+// console.log(b.getName());
+// console.log(b.getAge());
+// b.incScore();
+// console.log(b.getScore());

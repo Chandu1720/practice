@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            background-color: #f0f0f0;
+        }
+        .btn {
+            height: 100px;
+            width: 100px;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 14px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .btn:nth-child(1) {
+            background-color: red;
+        }
+        .btn:nth-child(2) {
+            background-color: rgb(240, 237, 34);
+        }
+        .btn:nth-child(3) {
+            background-color: green;
+        }
+        .traffic-signal {
+            width: 100px;
+            height: 300px;
+            background-color: #333;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .traffic-signal div {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #555;
+            transition: background-color 0.3s ease;
+            margin: 0 auto;
+            display: flex;}
+        #l i,#ll i, #lll i {
+            display: none;
+            font-size: 50px;
+            color: white;
+            text-align: center;
+            line-height: 80px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn" type="submit" onclick="signal()">RED</button>
+    <button class="btn" onclick="signalyellow()">yellow</button>
+    <button class="btn" onClick="signalgreen()">GREEN</button>
+    <div  class="traffic-signal">
+    <div id="l"><i class="bi bi-person-arms-up" id="p"></i></div>
+    <div id="ll"><i class="bi bi-person-raised-hand"></i></div>
+    <div id="lll"><i class="bi bi-person-walking"></i></div>
+    </div>
+    <script>
+        const red = document.getElementById('l');
+        const trafficSignal = document.querySelector('.traffic-signal');
+        const yellow = document.getElementById('ll');
+        const green = document.getElementById('lll');
+        function signal() {
+            trafficSignal.style.display = 'flex';
+            red.style.backgroundColor = 'red';
+            red.querySelector('i').style.display = 'inline-block';
+            yellow.style.backgroundColor = '#555';
+            green.style.backgroundColor = '#555';
+            green.querySelector('i').style.display = 'none';
+            yellow.querySelector('i').style.display = 'none';
+            
+        }
+        function signalyellow() {
+            red.querySelector('i').style.display = 'none';
+            yellow.querySelector('i').style.display = 'inline-block';
+            trafficSignal.style.display = 'flex';
+            yellow.style.backgroundColor = 'yellow';
+            red.style.backgroundColor = '#555';
+            green.style.backgroundColor = '#555';
+            green.querySelector('i').style.display = 'none';
+
+        }
+        function signalgreen() {
+            yellow.querySelector('i').style.display = 'none';
+            red.querySelector('i').style.display = 'none';
+            green.querySelector('i').style.display = 'inline-block';
+            trafficSignal.style.display = 'flex';
+            green.style.backgroundColor = 'green';
+            red.style.backgroundColor = '#555';
+            yellow.style.backgroundColor = '#555';
+        }
+    </script>
+</body>
+</html>

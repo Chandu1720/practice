@@ -69,5 +69,15 @@
         // console.log(+"hello");
         //- it nativate
         //  console.log(-5);
+        // ++increment , decrement --
+        let i=0;
+        // console.log(i++); post increment
+        // console.log(i--); post decrement
+        // console.log(++i); pre increment
+        // console.log(--i); pre decrement
+        
+        
+        
+        
         
          
