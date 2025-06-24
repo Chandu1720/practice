@@ -13,7 +13,7 @@ premitive data types are
     7->bigint:it is newly introduced Represents large integers beyond the safe range of Number
 premitive data types are immutable that means we cannot change the varibble value once assigned 
 complex data types are:
-    complex data types also known as the refernce data types They store a reference (memory address) to the actual value.
+    complex data types al+so known as the refernce data types They store a reference (memory address) to the actual value.
 When you copy them, you're copying the reference, not the value itself.
 
     1->objects:it a key-value pair it store data like key and value ex:let obj={name:"chandu"} it can store any type of data

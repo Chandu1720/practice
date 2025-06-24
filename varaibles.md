@@ -20,7 +20,7 @@ variable means that that can store data like container data can be changed at an
         van ="tata"
         the above one is that we get error that varible cannot be declared  it will pass withiout using strict mode 
 
-        DIFFERNCE B/W LET VAR CONST  
+        DIFFERNCE B/W LET // VAR // CONST  
         VAR: Declare the variable with function or global scope and allows redeclaration and reassigning in the same scope
             ex: function hello(){
                     var  greet="hello hi";
