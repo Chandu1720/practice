@@ -27,6 +27,9 @@ const questions = [
     ],
   }
 ];
+// ...existing code...
+document.getElementById("start-btn").addEventListener("click", startQuiz);
+// ...existing code...
 
 const questionContainer = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
@@ -89,3 +92,5 @@ function showScore() {
   scoreContainer.classList.remove("hide");
   scoreElement.innerText = `${score} / ${questions.length}`;
 }
+
+ startQuiz();
